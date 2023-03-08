@@ -1,0 +1,48 @@
+version: "3"  
+
+services: 
+  mysql:
+    container_name: mysql_db   
+    build: ./mysql/
+    restart: always
+    environment:
+      MYSQL_USER: "myuser"
+      MYSQL_PASSWORD: "mypass"
+      MYSQL_DATABASE: "db"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - '3306:3306'
+    networks:
+      - net
+
+  pythonapp:
+    container_name: pythonapp
+    build: ./pythonapp/
+    command: sh -c "sleep 15s; python3 ./insert_data.py"
+    depends_on:
+      - mysql
+    volumes:
+      - ./pythonapp:/usr/app/src/
+      - ./data.csv:/usr/app/src/data.csv
+    networks:
+      - net
+
+  flask_app:
+    container_name: flask_container
+    build: ./flask_app/
+    depends_on:
+      - mysql
+    ports:
+      - '8000:8000'
+    networks:
+      - net 
+
+
+networks:
+  net:
+    driver: bridge
+    # driver: macvlan
+    ipam:
+      config:
+        - subnet: "172.28.0.0/24"
+  
