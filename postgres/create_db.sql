@@ -1,23 +1,40 @@
-CREATE TABLE accounts(
-    user_id serial PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(50) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    created_on TIMESTAMP NOT NULL,
-    last_login TIMESTAMP
+
+create table customer(
+	id serial primary key,
+	name varchar(255),
+	phone varchar(30),
+	email varchar(255)
 );
 
-INSERT INTO accounts(username, password, email, created_on)
-VALUES('user', 'pass', 'test@email.com', CURRENT_TIMESTAMP);
-
-
-
-CREATE TABLE people(
-    id serial PRIMARY KEY,
-    name VARCHAR(50) UNIQUE NOT NULL,
-    surname VARCHAR(50) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL
+create table product(
+	id serial primary key,
+	name varchar(255),
+	description text,
+	price integer
 );
 
-INSERT INTO people(name, surname, email)
-VALUES('User Name', 'User Surname', 'test@email.com')
+create table product_photo(
+	id serial primary key,
+	url varchar(255),
+	product_id integer references product(id)
+);
+
+create table cart(
+	customer_id integer references customer(id),
+	id serial primary key
+);
+
+create table cart_product(
+	cart_id integer references cart(id),
+	product_id integer references product(id)
+);
+
+
+insert into customer(name, phone, email) values ('Nick', '02', 'nikk@gmaill.com');
+insert into customer(name, phone, email) values ('Peter', '03', 'pet@gmaill.com');
+
+insert into product(name, description, price) values ('iPhone', 'mobile phone', 100000);
+insert into product(name, description, price) values ('rolex', 'watch', 50000);
+
+insert into product_photo(url, product_id) values ('iphone_photo', 1);
+
