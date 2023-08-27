@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  mongo_db:
+    container_name: mongo_container
+    image: mongo:latest
+    environment:
+      MONGODB_DATABASE: "admin"
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "pass"
+    volumes:
+      - ./backup:/data/db
+    ports:
+      - "27019:27017"
