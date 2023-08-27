@@ -1,3 +1,5 @@
 postgres/backup/
 flask_mysql/pythonapp/data.csv
 mongo_db/backup/
+*venv/
+*backup/
