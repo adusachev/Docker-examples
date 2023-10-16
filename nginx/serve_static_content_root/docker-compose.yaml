@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      - ./static.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./index_example.html:/usr/share/nginx/html/index/index.html  # (!)
+      - ./file.txt:/usr/share/nginx/html/index/file.txt
