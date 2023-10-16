@@ -24,4 +24,5 @@ services:
 
 networks:
   net:
+    name: minio_network
     driver: bridge
