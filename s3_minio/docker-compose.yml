@@ -3,8 +3,9 @@ version: "3"
 services:
   s3_storage:
     container_name: minio
-    image: minio/minio
-    command: server /data --console-address :9001
+    image: minio/minio:latest
+    entrypoint: sh
+    command: -c "mkdir -p /data/my-new-bucket && minio server /data --console-address :9001"
     restart: always
     environment:
       MINIO_ROOT_USER: "minio_user"
